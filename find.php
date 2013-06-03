@@ -29,7 +29,6 @@ function parseForHelpers($path) {
 	$code = file_get_contents($path);
 	$parser = new PHPParser_Parser(new PHPParser_Lexer());
 	$traverser = new PHPParser_NodeTraverser();
-//	$traverser->addVisitor(new PHPParser_NodeVisitor_NameResolver());
 	$traverser->addVisitor(new NodeVisitor($path));
 
 	try {
