@@ -47,9 +47,7 @@ $path = $_SERVER['argv'][1];
 
 if (is_file($path)) {
 	parseForHelpers($path);
-}
-
-if (is_dir($path)) {
+} elseif (is_dir($path)) {
 	$iterator = new RecursiveDirectoryIterator($path, FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::SKIP_DOTS);
 	$iterator = new RecursiveIteratorIterator($iterator);
 	$iterator = new RegexIterator($iterator, '/\.php$/');
