@@ -44,15 +44,18 @@ if ($_SERVER['argc'] < 2) {
 }
 
 $path = $_SERVER['argv'][1];
+foreach (array_slice($_SERVER['argv'], 1) as $path) {
 
-if (is_file($path)) {
-	parseForHelpers($path);
-} elseif (is_dir($path)) {
-	$iterator = new RecursiveDirectoryIterator($path, FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::SKIP_DOTS);
-	$iterator = new RecursiveIteratorIterator($iterator);
-	$iterator = new RegexIterator($iterator, '/\.php$/');
+	if (is_file($path)) {
+		parseForHelpers($path);
 
-	foreach ($iterator as $item) {
-		parseForHelpers($item->getPathName());
+	} elseif (is_dir($path)) {
+		$iterator = new RecursiveDirectoryIterator($path, FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::SKIP_DOTS);
+		$iterator = new RecursiveIteratorIterator($iterator);
+		$iterator = new RegexIterator($iterator, '/\.php$/');
+
+		foreach ($iterator as $item) {
+			parseForHelpers($item->getPathName());
+		}
 	}
 }
